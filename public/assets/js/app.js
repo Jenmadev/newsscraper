@@ -3,7 +3,7 @@ $.getJSON("/articles", function(data) {
         $("#articles").empty();
     
         for (var i = 0; i < data.length; i++) {
-            $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+            $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'> SAVE ARTICLE</button></p>");
         }
     }
   });

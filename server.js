@@ -65,14 +65,19 @@ mongoose.connect("mongodb://localhost/week18Populater", {
 app.get("/scrape", function(req,res){
   anxios.get("https://techcrunch.com/"), function(error, response, html){
     var $ = cheerio.load(response.data);
-    $("h2.post-title").each(function(i,element){
+    $(".block-content").each(function(i,element){
       var result = {};
       result.title = $(this)
+        .children("h2.post-title")
         .children("a")
         .text();
       result.link = $(this)
+        .children("h2.post-title")
         .children("a")
         .attr("href");
+      result.excerpt = $(this)
+      .children("p.excerpt")
+      .html();
 
       db.Article
       .create(result)
