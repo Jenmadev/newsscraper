@@ -3,3 +3,32 @@
     font-size: 36px;
     
 }
+
+.title{
+    color: #000;
+    background-color: blue;
+    padding-left:25px;
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  .button{
+    color: #fff;
+    background-color: #000;
+    padding-right:15px;
+    padding-left:15px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    margin-right: 50px;
+    margin-bottom:10px;
+    margin-top:10px;
+    
+  }
+  .button-div{
+    background-color: blue;
+    padding:10px;
+    
+  }
+  .article-template{
+      margin-top: 10px;
+  }

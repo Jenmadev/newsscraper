@@ -8,17 +8,31 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div id="articles">
-            <div class="card">
-                <h2 class="card-header warning">
-                    Uh oh! We don't have any saved articles for you!
-                </h2>
+
+<div id="articles">
+    {{#if articles}}
+        {{#each articles}}
+            <div class="row article-template">
+                <div class="col-md-9 title">
+                    <h2>{{title}}</h2>
+                </div>
+                <div class="col-md-3 offset-1 button-div text-right">
+                    <button class="button"> Saved Article</button>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="card-header warning">
+                        Uh oh! We don't have any saved articles for you!
+                    </h2>
+                </div>
             </div>
         </div>
-
-        <input type="hidden" id="is-saved" value="false">
-    </div>
+    {{/if}}
+<input type="hidden" id="is-saved" value="false">
+    
 </div>
 

@@ -94,17 +94,26 @@ app.get("/scrape", function(req, res){
     console.log("ScrapeRoot: Get");
     request("https://techcrunch.com/", function(error, response, html) {
         var $ = cheerio.load(html);
+        var articles = [];
+        
         $("h2.post-title").each(function(i,element){
           console.log("Hello");
+          // console.log(element);
           var title = $(element).text();
           var link = $(element).children().attr("href");
+          articles.push({
+            title: title,
+            link: link
+          });
           db.Article.create({
             "title": title, 
             "link": link
           });
         });
+        console.log(articles);
+        res.render("index", {articles: articles});
       });
-    res.render("index");
+    
 });
 
 
