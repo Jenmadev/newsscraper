@@ -107,7 +107,8 @@ app.get("/scrape", function(req, res){
           });
           db.Article.create({
             "title": title, 
-            "link": link
+            "link": link,
+            "saved": false
           });
         });
         console.log(articles);

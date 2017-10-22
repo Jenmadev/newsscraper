@@ -1,28 +1,28 @@
-$.getJSON("/articles", function(data) {
-    if(data.length > 0){
-        var isSaved = $("#is-saved").val();
-        $("#articles").empty();
+// $.getJSON("/articles", function(data) {
+//     if(data.length > 0){
+//         var isSaved = $("#is-saved").val();
+//         $("#articles").empty();
     
-        for (var i = 0; i < data.length; i++) {
-            if (isSaved == "true"){
-                $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'>ADD NOTE</button><br/> <button class='savedArticle'>DELETE ARTICLE</button></p>");
-            }
-            else{
-                $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'> SAVE ARTICLE</button></p>");
-            }
-        }
-    }
-  });
+//         for (var i = 0; i < data.length; i++) {
+//             if (isSaved == "true"){
+//                 $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'>ADD NOTE</button><br/> <button class='savedArticle'>DELETE ARTICLE</button></p>");
+//             }
+//             else{
+//                 $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'> SAVE ARTICLE</button></p>");
+//             }
+//         }
+//     }
+//   });
 
-  $.getJSON("/saved", function(data) {
-    if(data.length > 0){
-        $("#articles").empty();
+  // $.getJSON("/saved", function(data) {
+  //   if(data.length > 0){
+  //       $("#articles").empty();
     
-        for (var i = 0; i < data.length; i++) {
-            $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'> SAVE ARTICLE</button></p>");
-        }
-    }
-  });
+  //       for (var i = 0; i < data.length; i++) {
+  //           $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br/> <button class='savedArticle'> SAVE ARTICLE</button></p>");
+  //       }
+  //   }
+  // });
 
   //Whenever someone click a savedArticle button
   $(document).on("click", "button.savedArticle", function() {
