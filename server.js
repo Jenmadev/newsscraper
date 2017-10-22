@@ -8,19 +8,15 @@ var newsscraperRoute = require("./controller/newscrapper_controller.js");
 
 // Initialize Express
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // HandleBars
 var exphbs = require("express-handlebars");
-
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-
 app.set("view engine", "handlebars");
-
-app.use(express.static("public"));
 
 // Require request and cheerio. This makes the scraping possible
 var request = require("request");
@@ -30,17 +26,13 @@ var axios = require("axios");
 // Require all models
 var db = require("./models");
 
-var PORT = 3000;
-
 // Configure middleware
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
-// Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
-
 // Database configuration
 // var databaseUrl = "scraper";
 // var collections = ["scrapedData"];
@@ -60,36 +52,64 @@ mongoose.connect("mongodb://localhost/week18Populater", {
 });
 
 //ROUTES
+// Root
+app.get("/", function(req, res) {
+    console.log("get");
+        res.render("index");
+    });
+
 
 // Scraping
-app.get("/scrape", function(req,res){
-  anxios.get("https://techcrunch.com/"), function(error, response, html){
-    var $ = cheerio.load(response.data);
-    $(".block-content").each(function(i,element){
-      var result = {};
-      result.title = $(this)
-        .children("h2.post-title")
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("h2.post-title")
-        .children("a")
-        .attr("href");
-      result.excerpt = $(this)
-      .children("p.excerpt")
-      .html();
+// app.get("/scrape", function(req,res){
+//   axios.get("https://techcrunch.com/"), function(error, response, html){
+//     var $ = cheerio.load(html);
+//     console.log(html);
+//     $(".block-content").each(function(i,element){
+//       var result = {};
+//       result.title = $(this)
+//         .children("h2.post-title")
+//         .children("a")
+//         .text();
+//       result.link = $(this)
+//         .children("h2.post-title")
+//         .children("a")
+//         .attr("href");
+//       result.excerpt = $(this)
+//       .children("p.excerpt")
+//       .html();
 
-      db.Article
-      .create(result)
-      .then(function(dbArticle){
-        res.send("Scrape Complete");
-      })
-      .catch(function(err){
-        res.json(err);
+//       db.Article
+//       .create(result)
+//       .then(function(dbArticle){
+//         res.send("Scrape Complete");
+//       })
+//       .catch(function(err){
+//         res.json(err);
+//       });
+//     });  
+//   };
+// });
+
+app.get("/scrape", function(req, res){
+    console.log("ScrapeRoot: Get");
+    request("https://techcrunch.com/", function(error, response, html) {
+        var $ = cheerio.load(html);
+        $("h2.post-title").each(function(i,element){
+          var title = $(element).text();
+          var link = $(element).children().attr("href");
+          db.Article.create({
+            "title": title, 
+            "link": link
+          });
+        });
       });
-    });  
-  };
+    res.render("index");
 });
+
+
+
+
+
 
 // Get all articles
 
