@@ -47,7 +47,7 @@ app.use(express.static("public"));
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/week18Populater", {
+mongoose.connect("mongodb://localhost/techcrunchscraper", {
   useMongoClient: true
 });
 
@@ -95,6 +95,7 @@ app.get("/scrape", function(req, res){
     request("https://techcrunch.com/", function(error, response, html) {
         var $ = cheerio.load(html);
         $("h2.post-title").each(function(i,element){
+          console.log("Hello");
           var title = $(element).text();
           var link = $(element).children().attr("href");
           db.Article.create({
