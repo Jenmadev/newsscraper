@@ -6,11 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jenmadev/newsscraper.git"
-  },
-  "author": "",
+  "repository": "git+https://github.com/Jenmadev/newsscraper.git",
+  "author": "Jenmadev <info@maknowsthat.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Jenmadev/newsscraper/issues"

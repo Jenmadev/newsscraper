@@ -109,6 +109,11 @@ app.get("/scrape", function(req, res){
             "title": title, 
             "link": link,
             "saved": false
+          }).then(function(dbArticle){
+            res.send("Scrape Complete");
+          })
+          .catch(function(err){
+            res.json(err);
           });
         });
         console.log(articles);
