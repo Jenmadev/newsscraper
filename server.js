@@ -140,18 +140,16 @@ app.get("/scrape", function(req, res){
 // });
 
 // Saved articles
-// app.post("/saved", function(req, res) {
-//   db.Article.findOneAndUpdate({_id: req.params.id })
-//   .then(function(dbArticle) {
-//     return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-//   })
-//   .then(function(dbArticle) {
-//     res.json(dbArticle);
-//   })
-//   .catch(function(err) {
-//     res.json(err);
-//   });
-// });
+app.post("/saved", function(req, res) {
+  db.Article.findOneAndUpdate({_id: req.body._id},{$set:{saved:true}})
+  .then(function(dbArticle) {
+    console.log(dbArticle);
+    return res.send("Article Saved")
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+});
 
 // Article with Note
 app.get("/articles/:id", function(req, res) {
