@@ -18,6 +18,10 @@ var ArticleSchema = new Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    excerpt:{
+        type: String,
+        required: true
     }
     });
 

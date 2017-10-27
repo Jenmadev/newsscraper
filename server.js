@@ -58,57 +58,41 @@ app.get("/", function(req, res) {
         res.render("index");
     });
 
-
-// Scraping
-// app.get("/scrape", function(req,res){
-//   axios.get("https://techcrunch.com/"), function(error, response, html){
-//     var $ = cheerio.load(html);
-//     console.log(html);
-//     $(".block-content").each(function(i,element){
-//       var result = {};
-//       result.title = $(this)
-//         .children("h2.post-title")
-//         .children("a")
-//         .text();
-//       result.link = $(this)
-//         .children("h2.post-title")
-//         .children("a")
-//         .attr("href");
-//       result.excerpt = $(this)
-//       .children("p.excerpt")
-//       .html();
-
-//       db.Article
-//       .create(result)
-//       .then(function(dbArticle){
-//         res.send("Scrape Complete");
-//       })
-//       .catch(function(err){
-//         res.json(err);
-//       });
-//     });  
-//   };
-// });
-
 app.get("/scrape", function(req, res){
     console.log("ScrapeRoot: Get");
     request("https://techcrunch.com/", function(error, response, html) {
         var $ = cheerio.load(html);
         var articles = [];
-        
-        $("h2.post-title").each(function(i,element){
+        $(".block-content").each(function(i,element){
+        // $("h2.post-title").each(function(i,element){
           console.log("Hello");
-          // console.log(element);
-          var title = $(element).text();
-          var link = $(element).children().attr("href");
+          console.log(element);
+          var title = 
+          $(element)
+            .children("h2.post-title")
+            .children("a")
+            .text();
+          var link = $(element)
+          // .children().attr("href");
+          .children("h2.post-title")
+          .children("a")
+          .attr("href");
+
+          var excerpt = $(element)
+          .children("p.excerpt")
+          .text();
+
           articles[i] = {
             title: title,
-            link: link
+            link: link,
+            excerpt:excerpt
           };
+
           db.Article.create({
             "title": title, 
             "link": link,
-            "saved": false
+            "saved": false,
+            "excerpt": excerpt
           }).then(function(dbArticle){
             // res.send("Scrape Complete");
             console.log(dbArticle);
@@ -124,20 +108,6 @@ app.get("/scrape", function(req, res){
     
 });
 
-
-
-
-
-
-// Get all articles
-
-// app.get("/articles", function(req, res) {
-//   db.Article
-//   .find({})
-//   .then(function(dbArticle) {
-//     res.json(dbArticle);
-//   });
-// });
 
 // Saved articles
 app.post("/saved", function(req, res) {
@@ -165,18 +135,12 @@ app.get("/articles/:id", function(req, res) {
 });
 
 //Routes for saving & updating an article with associated Note
-app.post("/articles/:id", function(req, res) {
-  db.Note
-  .create(req.body)
-  .then(function(dbNote) {
-    return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-  })
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
-  });
+app.get("/articles", function(req, res) {
+  db.Article
+    .find({saved:true})
+    .then(function(dbArticle){
+      res.render("savedArticles",{articles:dbArticle})
+    })
 });
 
 // Starts the server to begin listening
