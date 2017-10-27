@@ -12,7 +12,10 @@ $(document).on("click", "#savedbutton", function() {
       data:{
         _id:thisId
       }
-    })
+      })
+      .done(function(data){
+        console.log(data);
+      });
 
       // With that done, add the note information to the page
       // .done(function(data) {
