@@ -101,22 +101,24 @@ app.get("/scrape", function(req, res){
           // console.log(element);
           var title = $(element).text();
           var link = $(element).children().attr("href");
-          articles.push({
+          articles[i] = {
             title: title,
             link: link
-          });
+          };
           db.Article.create({
             "title": title, 
             "link": link,
             "saved": false
           }).then(function(dbArticle){
-            res.send("Scrape Complete");
+            // res.send("Scrape Complete");
+            console.log(dbArticle);
+            articles[i]._id = dbArticle._id;
           })
           .catch(function(err){
             res.json(err);
           });
         });
-        console.log(articles);
+        // console.log(articles);
         res.render("index", {articles: articles});
       });
     
@@ -129,28 +131,27 @@ app.get("/scrape", function(req, res){
 
 // Get all articles
 
-app.get("/articles", function(req, res) {
-  db.Article
-  .find({})
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  });
-});
+// app.get("/articles", function(req, res) {
+//   db.Article
+//   .find({})
+//   .then(function(dbArticle) {
+//     res.json(dbArticle);
+//   });
+// });
 
 // Saved articles
-app.post("/saved", function(req, res) {
-  db.Article
-  .create(req.body)
-  .then(function(dbArticle) {
-    return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-  })
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
-  });
-});
+// app.post("/saved", function(req, res) {
+//   db.Article.findOneAndUpdate({_id: req.params.id })
+//   .then(function(dbArticle) {
+//     return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+//   })
+//   .then(function(dbArticle) {
+//     res.json(dbArticle);
+//   })
+//   .catch(function(err) {
+//     res.json(err);
+//   });
+// });
 
 // Article with Note
 app.get("/articles/:id", function(req, res) {
