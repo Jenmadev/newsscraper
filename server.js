@@ -33,15 +33,7 @@ app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
-// Database configuration
-// var databaseUrl = "scraper";
-// var collections = ["scrapedData"];
 
-// Hook mongojs configuration to the db variable
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function(error) {
-//   console.log("Database Error:", error);
-// });
 
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
