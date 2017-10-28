@@ -14,7 +14,8 @@
         {{#each articles}}
             <div class="row article-template">
                 <div class="col-md-9 title">
-                    <h2>{{title}}</h2>
+                    <h2><a href="{{link}}"></a>{{title}}</h2>
+                    <p>{{excerpt}}</p>
                 </div>
                 <div class="col-md-3 offset-1 button-div text-right">
                     <button id="savedButton" data-id= "{{_id}}"> Saved Article</button>

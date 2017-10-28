@@ -122,16 +122,17 @@ app.post("/saved", function(req, res) {
 });
 
 // Article with Note
-app.get("/articles/:id", function(req, res) {
-  db.Article
-  .findOne({ _id: req.params.id })
-  .populate("note")
-  .then(function(dbArticle) {
-    res.json(dbArticle);
+app.post("/savenote", function(req, res) {
+  var newNote = {
+    note: req.body.text
+  };
+  db.Article.update({_id: req.body._id},{$push:{notes:newNote}},function(error, docs){
+    if(error){
+      console.log
+    }
+    console.log(docs);
   })
-  .catch(function(err) {
-    res.json(err);
-  });
+  
 });
 
 //Routes for saving & updating an article with associated Note
