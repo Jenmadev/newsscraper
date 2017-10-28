@@ -99,7 +99,7 @@ app.get("/scrape", function(req, res){
             articles[i]._id = dbArticle._id;
           })
           .catch(function(err){
-            res.json(err);
+            console.log(err);
           });
         });
         // console.log(articles);
@@ -143,6 +143,19 @@ app.get("/articles", function(req, res) {
       res.render("savedArticles",{articles:dbArticle})
     })
 });
+
+// Delete articles
+app.post("/deleteArticles", function(req, res) {
+  db.Article.findOneAndUpdate({_id: req.body._id},{$set:{saved:false}})
+  .then(function(dbArticle) {
+    return res.redirect("/articles");
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+
+});
+
 
 // Starts the server to begin listening
 // =============================================================

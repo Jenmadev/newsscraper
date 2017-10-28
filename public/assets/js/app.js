@@ -36,6 +36,16 @@ $( document ).ready(function() {
     })
   });
 
+  // When you click the delete button
+ $(document).on("click", "#deleteButton", function() {
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+  $.post("/deleteArticles",{
+    _id:thisId
+  },function(data, status){
+    console.log(data);
+  })
+});
 
   $('#exampleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
