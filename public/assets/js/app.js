@@ -40,10 +40,12 @@ $( document ).ready(function() {
  $(document).on("click", "#deleteButton", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  $.post("/deleteArticles",{
-    _id:thisId
-  },function(data, status){
-    console.log(data);
+  $.get("/deleteArticles/"+ thisId,
+    function(data, status){
+    // console.log(data);
+    $.get("/articles", function(deleteData){
+      console.log(data);
+    })
   })
 });
 

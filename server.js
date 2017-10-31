@@ -137,15 +137,12 @@ app.get("/articles", function(req, res) {
 });
 
 // Delete articles
-app.post("/deleteArticles", function(req, res) {
-  db.Article.findOneAndUpdate({_id: req.body._id},{$set:{saved:false}})
-  .then(function(dbArticle) {
-    return res.redirect("/articles");
-  })
-  .catch(function(err) {
-    res.json(err);
+app.get("/deleteArticles/:id", function(req, res) {
+  db.Article.findOneAndUpdate({_id: req.params.id},{$set:{saved:false}}, function(err,doc){
+    // if (err) throw err;
+    // console.log(doc);
+    res.redirect('/articles');
   });
-
 });
 
 
